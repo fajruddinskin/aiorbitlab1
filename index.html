@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Orbit Lab - Pioneering Artificial Intelligence Research</title>
+    <style>
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #1a237e;
+            --primary-light: #534bae;
+            --primary-dark: #000051;
+            --secondary: #00b0ff;
+            --secondary-light: #69e2ff;
+            --secondary-dark: #0081cb;
+            --text-light: #f5f5f5;
+            --text-dark: #212121;
+            --bg-light: #f8f9fa;
+            --bg-card: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--primary);
+            color: var(--text-light);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            font-size: 1.8rem;
+            color: var(--secondary);
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 1.5rem;
+        }
+
+        nav a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--secondary);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Page Styles */
+        .page {
+            display: none;
+            padding: 3rem 0;
+            min-height: 80vh;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary);
+        }
+
+        /* Home Page */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--text-light);
+            padding: 4rem 0;
+            text-align: center;
+            border-radius: 10px;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: var(--text-light);
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--secondary-dark);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        /* Research Page */
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .research-card {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .research-image {
+            height: 200px;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 1.5rem;
+        }
+
+        .research-content {
+            padding: 1.5rem;
+        }
+
+        /* Team Page */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-member {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .member-photo {
+            height: 200px;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 4rem;
+        }
+
+        .member-info {
+            padding: 1.5rem;
+        }
+
+        .member-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .member-role {
+            color: var(--secondary-dark);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Publications Page */
+        .publications-list {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .publication-item {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .publication-item:last-child {
+            border-bottom: none;
+        }
+
+        .publication-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-authors {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-venue {
+            color: var(--secondary-dark);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .publication-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .publication-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        /* Contact Page */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .contact-details {
+            margin-top: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-icon {
+            margin-right: 1rem;
+            color: var(--secondary);
+            font-size: 1.2rem;
+        }
+
+        .contact-form {
+            background-color: var(--bg-card);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .social-links a:hover {
+            background-color: var(--secondary);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav {
+                width: 100%;
+                margin-top: 1rem;
+                display: none;
+            }
+
+            nav.active {
+                display: block;
+            }
+
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav li {
+                margin: 0;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            nav a {
+                display: block;
+                padding: 0.8rem 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 15px;
+                top: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-icon">🛰️</div>
+                <div class="logo-text">AI Orbit Lab</div>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="#" class="nav-link" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="research">Research</a></li>
+                    <li><a href="#" class="nav-link" data-page="team">Team</a></li>
+                    <li><a href="#" class="nav-link" data-page="publications">Publications</a></li>
+                    <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="container">
+                <div class="hero">
+                    <h1>Pioneering the Future of Artificial Intelligence</h1>
+                    <p>AI Orbit Lab is at the forefront of cutting-edge AI research, developing innovative solutions to complex problems through interdisciplinary collaboration.</p>
+                    <a href="#" class="btn nav-link" data-page="research">Explore Our Research</a>
+                </div>
+                
+                <h2 class="section-title">Our Focus Areas</h2>
+                <div class="features">
+                    <div class="feature-card">
+                        <div class="feature-icon">🧠</div>
+                        <h3>Machine Learning</h3>
+                        <p>Developing novel algorithms and models for pattern recognition, prediction, and decision-making.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👁️</div>
+                        <h3>Computer Vision</h3>
+                        <p>Advancing visual perception systems for object detection, image generation, and scene understanding.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🗣️</div>
+                        <h3>Natural Language Processing</h3>
+                        <p>Creating systems that understand, interpret, and generate human language with high accuracy.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3>Robotics & Autonomous Systems</h3>
+                        <p>Developing intelligent systems that can perceive, reason, and act in complex environments.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Page -->
+        <section id="research" class="page">
+            <div class="container">
+                <h1 class="page-title">Research Projects</h1>
+                <div class="research-grid">
+                    <div class="research-card">
+                        <div class="research-image">Neural Architecture Search</div>
+                        <div class="research-content">
+                            <h3>Automated Machine Learning</h3>
+                            <p>Developing algorithms that can automatically design and optimize neural network architectures for specific tasks.</p>
+                            <a href="#" class="btn" style="margin-top: 1rem;">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="research-card">
+                        <div class="research-image">Explainable AI</div>
+                        <div class="research-content">
+                            <h3>Interpretable Machine Learning</h3>
+                            <p>Creating models that provide transparent and understandable decision-making processes for critical applications.</p>
+                            <a href="#" class="btn" style="margin-top: 1rem;">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="research-card">
+                        <div class="research-image">Federated Learning</div>
+                        <div class="research-content">
+                            <h3>Privacy-Preserving AI</h3>
+                            <p>Developing techniques to train machine learning models across decentralized devices while preserving data privacy.</p>
+                            <a href="#" class="btn" style="margin-top: 1rem;">Learn More</a>
+                        </div>
+                    </div>
+                    <div class="research-card">
+                        <div class="research-image">Reinforcement Learning</div>
+                        <div class="research-content">
+                            <h3>Autonomous Decision Making</h3>
+                            <p>Advancing reinforcement learning algorithms for complex sequential decision problems in dynamic environments.</p>
+                            <a href="#" class="btn" style="margin-top: 1rem;">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Page -->
+        <section id="team" class="page">
+            <div class="container">
+                <h1 class="page-title">Our Team</h1>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <div class="member-photo">👨‍🔬</div>
+                        <div class="member-info">
+                            <div class="member-name">Dr. Sarah Chen</div>
+                            <div class="member-role">Director & Principal Researcher</div>
+                            <p>Expert in deep learning and computer vision with 15+ years of research experience.</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-photo">👩‍🔬</div>
+                        <div class="member-info">
+                            <div class="member-name">Dr. Michael Rodriguez</div>
+                            <div class="member-role">Senior Research Scientist</div>
+                            <p>Specializes in natural language processing and knowledge representation.</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-photo">👨‍💻</div>
+                        <div class="member-info">
+                            <div class="member-name">Dr. Elena Petrov</div>
+                            <div class="member-role">Research Scientist</div>
+                            <p>Focuses on reinforcement learning and multi-agent systems.</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-photo">👩‍💼</div>
+                        <div class="member-info">
+                            <div class="member-name">Dr. James Wilson</div>
+                            <div class="member-role">Research Scientist</div>
+                            <p>Works on explainable AI and ethical machine learning.</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-photo">👨‍🎓</div>
+                        <div class="member-info">
+                            <div class="member-name">Alex Kim</div>
+                            <div class="member-role">PhD Candidate</div>
+                            <p>Researching federated learning and privacy-preserving techniques.</p>
+                        </div>
+                    </div>
+                    <div class="team-member">
+                        <div class="member-photo">👩‍🎓</div>
+                        <div class="member-info">
+                            <div class="member-name">Maria Gonzalez</div>
+                            <div class="member-role">PhD Candidate</div>
+                            <p>Focusing on neural architecture search and automated ML.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Publications Page -->
+        <section id="publications" class="page">
+            <div class="container">
+                <h1 class="page-title">Recent Publications</h1>
+                <div class="publications-list">
+                    <div class="publication-item">
+                        <div class="publication-title">Dynamic Neural Architecture Search for Real-World Applications</div>
+                        <div class="publication-authors">Chen, S., Wilson, J., Kim, A.</div>
+                        <div class="publication-venue">International Conference on Machine Learning (ICML), 2023</div>
+                        <div class="publication-links">
+                            <a href="#">PDF</a>
+                            <a href="#">Code</a>
+                            <a href="#">BibTeX</a>
+                        </div>
+                    </div>
+                    <div class="publication-item">
+                        <div class="publication-title">Interpretable Decision Trees via Concept Bottlenecks</div>
+                        <div class="publication-authors">Rodriguez, M., Petrov, E.</div>
+                        <div class="publication-venue">Neural Information Processing Systems (NeurIPS), 2023</div>
+                        <div class="publication-links">
+                            <a href="#">PDF</a>
+                            <a href="#">Code</a>
+                            <a href="#">BibTeX</a>
+                        </div>
+                    </div>
+                    <div class="publication-item">
+                        <div class="publication-title">Federated Learning with Differential Privacy: A Comprehensive Analysis</div>
+                        <div class="publication-authors">Kim, A., Chen, S., Gonzalez, M.</div>
+                        <div class="publication-venue">IEEE Transactions on Pattern Analysis and Machine Intelligence, 2023</div>
+                        <div class="publication-links">
+                            <a href="#">PDF</a>
+                            <a href="#">Code</a>
+                            <a href="#">BibTeX</a>
+                        </div>
+                    </div>
+                    <div class="publication-item">
+                        <div class="publication-title">Multi-Agent Reinforcement Learning in Complex Environments</div>
+                        <div class="publication-authors">Petrov, E., Wilson, J.</div>
+                        <div class="publication-venue">Autonomous Agents and Multi-Agent Systems (AAMAS), 2023</div>
+                        <div class="publication-links">
+                            <a href="#">PDF</a>
+                            <a href="#">Code</a>
+                            <a href="#">BibTeX</a>
+                        </div>
+                    </div>
+                    <div class="publication-item">
+                        <div class="publication-title">Ethical Considerations in Deploying AI Systems: A Framework</div>
+                        <div class="publication-authors">Wilson, J., Rodriguez, M.</div>
+                        <div class="publication-venue">AI Ethics Journal, 2023</div>
+                        <div class="publication-links">
+                            <a href="#">PDF</a>
+                            <a href="#">BibTeX</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Page -->
+        <section id="contact" class="page">
+            <div class="container">
+                <h1 class="page-title">Contact Us</h1>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h2 class="section-title">Get In Touch</h2>
+                        <p>We're always interested in collaborating with researchers, industry partners, and students passionate about AI.</p>
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <div class="contact-icon">📍</div>
+                                <div>
+                                    <strong>Address</strong><br>
+                                    AI Orbit Lab<br>
+                                    Murarai Hospital Road<br>
+                                    Murarai,Birbhum<br>
+                                    WB,731219
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">📞</div>
+                                <div>
+                                    <strong>Phone</strong><br>
+                                    (+91) 9972897745
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <div class="contact-icon">✉️</div>
+                                <div>
+                                    <strong>Email</strong><br>
+                                    contact@aiorbitlab.com 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <h2 class="section-title">Send Us a Message</h2>
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="subject">Subject</label>
+                                <input type="text" id="subject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea id="message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>AI Orbit Lab</h3>
+                    <p>Advancing the frontiers of artificial intelligence through innovative research and collaboration.</p>
+                    <div class="social-links">
+                        <a href="#" title="Twitter">🐦</a>
+                        <a href="#" title="GitHub">💻</a>
+                        <a href="#" title="LinkedIn">💼</a>
+                        <a href="#" title="YouTube">📺</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#" class="nav-link" data-page="home">Home</a></li>
+                        <li><a href="#" class="nav-link" data-page="research">Research</a></li>
+                        <li><a href="#" class="nav-link" data-page="team">Team</a></li>
+                        <li><a href="#" class="nav-link" data-page="publications">Publications</a></li>
+                        <li><a href="#" class="nav-link" data-page="contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Research Areas</h3>
+                    <ul>
+                        <li><a href="#">Machine Learning</a></li>
+                        <li><a href="#">Computer Vision</a></li>
+                        <li><a href="#">Natural Language Processing</a></li>
+                        <li><a href="#">Robotics</a></li>
+                        <li><a href="#">AI Ethics</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Join Us</h3>
+                    <ul>
+                        <li><a href="#">PhD Positions</a></li>
+                        <li><a href="#">Postdoctoral Fellowships</a></li>
+                        <li><a href="#">Visiting Scholars</a></li>
+                        <li><a href="#">Internships</a></li>
+                        <li><a href="#">Collaborations</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 AI Orbit Lab. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.getElementById('main-nav').classList.toggle('active');
+        });
+
+        // Page navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetPage = this.getAttribute('data-page');
+                
+                // Hide all pages
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show target page
+                document.getElementById(targetPage).classList.add('active');
+                
+                // Close mobile menu if open
+                document.getElementById('main-nav').classList.remove('active');
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            });
+        });
+
+        // Contact form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
